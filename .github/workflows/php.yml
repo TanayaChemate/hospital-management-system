@@ -1,0 +1,27 @@
+name: PHP CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Start PHP Server
+      run: php -S localhost:8000 -t Hospital-Management-System-master &
+
+    - name: Wait for server
+      run: sleep 5
+
+    - name: Test Application
+      run: curl http://localhost:8000
